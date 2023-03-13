@@ -6,7 +6,19 @@ module.exports = {
         try {
             
             const question = await Question.findOne().sort({ "_id" : 1 }).limit(1);
-            res.render("question.ejs", { question: question, user: req.user });
+            const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
+            res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
+        } catch (err) {
+            console.log(err);
+            res.render("errors/500.ejs")
+        }
+    },
+    getCurrentQuestion: async (req, res) => {
+        try {
+            
+            const question = await Question.findOne({_id:req.params.id});
+            const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
+            res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
         } catch (err) {
             console.log(err);
             res.render("errors/500.ejs")
@@ -15,10 +27,17 @@ module.exports = {
     getNextQuestion: async (req, res) => {
         try {
           const question = await Question.findOne({_id: {$gt: req.params.id }}).limit(1);
+          
           if(question != null){
-            res.render("question.ejs", { question: question, user: req.user });
+            const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
+            res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
           }else{
-            res.send("<h1>All Questions Answered</h1>");
+            
+            const currentQuestion = await Question.findOne({_id: req.params.id }).limit(1);
+            const markComplete = currentQuestion.users.indexOf(req.user.id) > -1?'is-success':'';
+            req.flash("nextQuestionError", ['No next question']);
+            res.render("question.ejs", { question: currentQuestion, user: req.user, markComplete: markComplete });
+
           }
           
         } catch (err) {
@@ -30,9 +49,13 @@ module.exports = {
         try {
           const question = await Question.findOne({_id: {$lt: req.params.id}}).sort({_id: -1}).limit(1);
           if(question != null){
-            res.render("question.ejs", { question: question, user: req.user });
+            const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
+            res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
           }else{
-            res.send("<h1>Went too back</h1>");
+            const currentQuestion = await Question.findOne({_id: req.params.id }).limit(1);
+            const markComplete = currentQuestion.users.indexOf(req.user.id) > -1?'is-success':'';
+            req.flash("previousQuestionError", ['No previous question']);
+            res.render("question.ejs", { question: currentQuestion, user: req.user, markComplete: markComplete });
           }
           
         } catch (err) {
@@ -56,14 +79,29 @@ module.exports = {
     },
     completedQuestion: async (req, res) => {
         try {
-            await Question.findOneAndUpdate(
-                { _id: req.params.id },
-                {
-                    $push: { users: req.user },
-                }
-            );
-            console.log("User Inserted");
-            res.redirect(`/question`);
+
+            const question = await Question.findOne({_id: req.params.id});
+            const markComplete = question.users.indexOf(req.user.id) > -1?true:false;
+
+            if(markComplete){
+                await Question.findOneAndUpdate(
+                    { _id: req.params.id },
+                    {
+                        $pull: { users: req.user.id },
+                    }
+                );
+                console.log("User Removed");
+
+            }else{
+                await Question.findOneAndUpdate(
+                    { _id: req.params.id },
+                    {
+                        $push: { users: req.user.id },
+                    }
+                );
+                console.log("User Inserted");
+            }
+            res.redirect(`/question/${req.params.id}`);
         } catch (err) {
             console.log(err);
             res.render("errors/500.ejs")
@@ -74,7 +112,7 @@ module.exports = {
             // Delete post from db
             await Question.remove({ _id: req.params.id });
             console.log("Deleted Question");
-            res.redirect("/profile");
+            res.redirect("/question");
         } catch (err) {
             console.log(err);
             res.render("errors/500.ejs")

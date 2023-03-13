@@ -1,56 +1,83 @@
 <%- include('partials/header') -%>
-<div class="container">
-  <div class="row justify-content-center mt-5">
-    <div class="col-6">
-        <h2>Question</h2>
 
-        <ul>
 
-                <li>
-                    <%= question.title %>
-                    <br>
-                    <%= question.answer %>
-                    <br>
-                    <%= question._id %>
+<div class="columns">
+    <div class="column">
+        
+        <div class="card">
+            <div class="card-content">
+                <h2 class="title has-text-centered"><%= question.title %></h2>
+                <h3 id="answer" class="subtitle has-text-centered is-hidden"><%= question.answer %></h3>
+            </div>
+        </div>
 
-                    
-                   
+        <div class="card">
+            <div class="card-content">
+                <div class="buttons is-centered">
+                    <a href="#" id="showAnswer" class="button is-info">
+                        <i id="answerIcon" class="fa fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-                    <div class="row justify-content-between">
-                        <form
-                            class="col-1"
-                            action="/question/completedQuestion/<%= question._id %>?_method=PUT"
-                            method="POST"
-                        >
-                            <button class="btn btn-primary fa-sharp fa-solid fa-check" type="submit"></button>
-                        </form>
-                        
-                        <form
-                            action="/question/deleteQuestion/<%= question._id %>?_method=DELETE"
-                            method="POST"
-                            class="col-3"
+        <div class="card">
+            <div class="card-content">
+                <div class="buttons is-centered">
+                    <form
+                        class="col-1"
+                        action="/question/completedQuestion/<%= question._id %>?_method=PUT"
+                        method="POST"
                     >
-                            <button class="btn btn-primary fa fa-trash" type="submit"></button>
-                        </form>
-                    </div>
-                </li>
-
+                        <button class="button markComplete fa fa-check <%= markComplete %>" type="submit"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
         
-        </ul>
-
-        <a href="/question/previousQuestion/<%= question._id %>"><i class="fa-solid fa-arrow-left"></i></a>
-        <a href="/question/nextQuestion/<%= question._id %>"><i class="fa-solid fa-arrow-right"></i></a>
-
+        <div class="card">
+            <div class="card-content">
+                <div class="buttons is-centered is-flex is-justify-content-space-between">
+                    <a href="/question/previousQuestion/<%= question._id %>" class="">
+                        <i class="fa fa-angle-left"></i>
+                        <span class="is-size-5">Left</span>
+                        <% if (messages.previousQuestionError) { %>   
+                            <span class="notification is-warning">
+                              <%= messages.previousQuestionError.pop() %>
+                            </span>
+                        <% } %> 
+                    </a>
+                    <a href="/question/nextQuestion/<%= question._id %>" class="">
+                        <% if (messages.nextQuestionError) { %>   
+                              <span class="notification is-warning">
+                                <%= messages.nextQuestionError.pop() %>
+                              </span>
+                        <% } %> 
+                        <span class="is-size-5">Right</span>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
         
+        <div class="card">
+            <div class="card-content">
+                <div class="buttons is-centered">
+                    <form
+                        class="col-1 <%= user.role %>"
+                        action="/question/deleteQuestion/<%= question._id %>?_method=DELETE"
+                        method="POST"
+                    >
+                        <button class="button is-danger showTrashIcon fa fa-trash" type="submit"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
     </div>
-
-
-      
-    <div class="col-6 mt-5">
-      <a class="btn btn-primary" href="/profile">Return to Profile</a>
-      <a class="btn btn-primary" href="/feed">Return to Feed</a>
-    </div>
-  </div>
 </div>
+</div>
+
+
 
 <%- include('partials/footer') -%>
