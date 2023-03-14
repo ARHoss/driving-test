@@ -15,7 +15,7 @@
             <div class="card-content">
                 <div class="buttons is-centered">
                     <a href="#" id="showAnswer" class="button is-info">
-                        <i id="answerIcon" class="fa fa-eye"></i>
+                        <i id="answerIcon" class="fa fa-eye-slash">Show Answer</i>
                     </a>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         action="/question/completedQuestion/<%= question._id %>?_method=PUT"
                         method="POST"
                     >
-                        <button class="button markComplete fa fa-check <%= markComplete %>" type="submit"></button>
+                        <button class="button markComplete fa fa-check <%= markComplete %>" type="submit"><%= markComplete?'Marked Complete' : 'Mark Complete' %></button>
                     </form>
                 </div>
             </div>
@@ -38,7 +38,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="buttons is-centered is-flex is-justify-content-space-between">
-                    <a href="/question/previousQuestion/<%= question._id %>" class="">
+                    <a href="/question/previousQuestion/<%= question._id %>"  class=<%= (messages.previousQuestionError) != null ? 'isDisabled' : '' %>>
                         <i class="fa fa-angle-left"></i>
                         <span class="is-size-5">Left</span>
                         <% if (messages.previousQuestionError) { %>   
@@ -47,7 +47,7 @@
                             </span>
                         <% } %> 
                     </a>
-                    <a href="/question/nextQuestion/<%= question._id %>" class="">
+                    <a href="/question/nextQuestion/<%= question._id %>" class=<%= (messages.nextQuestionError) != null ? 'isDisabled' : '' %>>
                         <% if (messages.nextQuestionError) { %>   
                               <span class="notification is-warning">
                                 <%= messages.nextQuestionError.pop() %>

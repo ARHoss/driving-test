@@ -33,10 +33,8 @@ module.exports = {
             res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
           }else{
             
-            const currentQuestion = await Question.findOne({_id: req.params.id }).limit(1);
-            const markComplete = currentQuestion.users.indexOf(req.user.id) > -1?'is-success':'';
             req.flash("nextQuestionError", ['No next question']);
-            res.render("question.ejs", { question: currentQuestion, user: req.user, markComplete: markComplete });
+            res.redirect(`/question/${req.params.id}`);
 
           }
           
@@ -52,10 +50,8 @@ module.exports = {
             const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
             res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
           }else{
-            const currentQuestion = await Question.findOne({_id: req.params.id }).limit(1);
-            const markComplete = currentQuestion.users.indexOf(req.user.id) > -1?'is-success':'';
             req.flash("previousQuestionError", ['No previous question']);
-            res.render("question.ejs", { question: currentQuestion, user: req.user, markComplete: markComplete });
+            res.redirect(`/question/${req.params.id}`);
           }
           
         } catch (err) {

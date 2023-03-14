@@ -8,9 +8,11 @@ function showAnswer(){
     answer.classList.toggle('is-hidden')
 
     if(answerIcon.classList.contains('fa-eye')){
+        answerIcon.innerText = 'Show Answer';
         answerIcon.classList.remove('fa-eye');
         answerIcon.classList.add('fa-eye-slash');
     }else{
+        answerIcon.innerText = 'Hide';
         answerIcon.classList.remove('fa-eye-slash');
         answerIcon.classList.add('fa-eye'); 
     }
