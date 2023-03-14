@@ -6,10 +6,12 @@
         
         <div class="card">
             <div class="card-content">
-                <h2 class="title has-text-centered"><%= question.title %></h2>
-                <h3 id="answer" class="subtitle has-text-centered is-hidden"><%= question.answer %></h3>
+                <h2 class="title is-2 has-text-centered"><%= question.title %></h2>
+                <div class="content">
+                    <h3 id="questionAnswer" class="subtitle is-3 has-text-centered is-hidden"><%= question.answer %></h3>
+                </div>
             </div>
-        </div>
+        </div> 
 
         <div class="card">
             <div class="card-content">
@@ -40,7 +42,7 @@
                 <div class="buttons is-centered is-flex is-justify-content-space-between">
                     <a href="/question/previousQuestion/<%= question._id %>"  class=<%= (messages.previousQuestionError) != null ? 'isDisabled' : '' %>>
                         <i class="fa fa-angle-left"></i>
-                        <span class="is-size-5">Left</span>
+                        <span class="is-size-5">Prev</span>
                         <% if (messages.previousQuestionError) { %>   
                             <span class="notification is-warning">
                               <%= messages.previousQuestionError.pop() %>
@@ -53,7 +55,7 @@
                                 <%= messages.nextQuestionError.pop() %>
                               </span>
                         <% } %> 
-                        <span class="is-size-5">Right</span>
+                        <span class="is-size-5">Next</span>
                         <i class="fa fa-angle-right"></i>
                     </a>
                 </div>
