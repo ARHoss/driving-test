@@ -16,9 +16,10 @@ if (document.querySelector(".markComplete")) {
 
 // Event handler code goes here
 function showAnswer(){
-    const answer = document.querySelector('#questionAnswer');
+    const answer = document.getElementsByClassName('questionAnswer');
     const answerIcon = document.querySelector('#answerIcon');
-    answer.classList.toggle('is-hidden')
+
+    Array.from(answer).forEach(el => el.classList.toggle('is-hidden'))
 
     if(answerIcon.classList.contains('fa-eye')){
         answerIcon.innerText = 'Show Answer';

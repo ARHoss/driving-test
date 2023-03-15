@@ -57,3 +57,7 @@ footer {
   justify-content: space-between;
   align-items: center;
 }
+
+.box:hover {
+  background-color: green;
+}

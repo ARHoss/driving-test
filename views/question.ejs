@@ -5,11 +5,27 @@
     <div class="column">
         
         <div class="card">
-            <div class="card-content">
+            <header class="card-header has-text-centered">
                 <h2 class="title is-2 has-text-centered"><%= question.title %></h2>
-                <div class="content">
-                    <h3 id="questionAnswer" class="subtitle is-3 has-text-centered is-hidden"><%= question.answer %></h3>
+            </header>
+            <div class="card-content is-flex is-flex-wrap-nowrap is-justify-content-center is-flex-direction-column">
+                
+                <div class="questionAnswer content box is-fullwidth is-hidden">
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
                 </div>
+                
+                <div class="questionAnswer content box is-fullwidth is-hidden">
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                </div>
+                
+                <div class="questionAnswer content box is-fullwidth is-hidden">
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                </div>
+                
+                <div class="questionAnswer content box is-fullwidth is-hidden">
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                </div>
+                
             </div>
         </div> 
 
