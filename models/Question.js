@@ -11,12 +11,12 @@ const QuestionSchema = new mongoose.Schema({
         required: true,
     },
     // Variable Name
-    answer: {
+    answer: [{
         // Type
         type: String,
         // Required variable
         required: true,
-    },
+    }],
     // array name
     users: [{
         // Type

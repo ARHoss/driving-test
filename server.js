@@ -17,6 +17,7 @@ const flash = require("express-flash");
 const logger = require("morgan");
 // Used to connect to Database
 const connectDB = require("./config/database");
+
 // Linking to routes
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");

@@ -1,5 +1,35 @@
 const Question = require("../models/Question");
+const openai = require("../middleware/openai")
 
+// OpenAI API call function
+async function callOpenAI(message) {
+    const response = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: message,
+        max_tokens: 3000,
+        temperature: 0
+    });
+
+    return response.data.choices[0].text.trim();
+}
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+}
 
 module.exports = {
     getQuestion: async (req, res) => {
@@ -7,6 +37,7 @@ module.exports = {
             
             const question = await Question.findOne().sort({ "_id" : 1 }).limit(1);
             const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
+            question.answer = shuffle(question.answer);
             res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
         } catch (err) {
             console.log(err);
@@ -18,6 +49,7 @@ module.exports = {
             
             const question = await Question.findOne({_id:req.params.id});
             const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
+            question.answer = shuffle(question.answer);
             res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
         } catch (err) {
             console.log(err);
@@ -27,8 +59,8 @@ module.exports = {
     getNextQuestion: async (req, res) => {
         try {
           const question = await Question.findOne({_id: {$gt: req.params.id }}).limit(1);
-          
           if(question != null){
+            question.answer = shuffle(question.answer);
             const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
             res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
           }else{
@@ -47,6 +79,7 @@ module.exports = {
         try {
           const question = await Question.findOne({_id: {$lt: req.params.id}}).sort({_id: -1}).limit(1);
           if(question != null){
+            question.answer = shuffle(question.answer);
             const markComplete = question.users.indexOf(req.user.id) > -1?'is-success':'';
             res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
           }else{
@@ -62,9 +95,22 @@ module.exports = {
     createQuestion: async (req, res) => {
         try {
             
+            let message = await callOpenAI(`provide 3 wrong answer not as a list but seperated by commas only that are close to this answer: ${req.body.answer}`);
+            message = message.split(', ');
+
+            // Questions & answers
+            console.log('Question: '+req.body.title)
+            console.log('Answer: '+req.body.answer)
+            console.log('Sample Answers '+message)
+
             await Question.create({
                 title: req.body.title,
-                answer: req.body.answer,
+                answer: [
+                    req.body.answer,
+                    message[0],
+                    message[1],
+                    message[2],
+                ]
             });
             console.log("Question has been added!");
             res.redirect('/profile');

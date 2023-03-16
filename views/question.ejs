@@ -11,19 +11,19 @@
             <div class="card-content is-flex is-flex-wrap-nowrap is-justify-content-center is-flex-direction-column">
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[0] %></h3></a> 
                 </div>
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[1] %></h3></a> 
                 </div>
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[2] %></h3></a> 
                 </div>
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer %></h3></a> 
+                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[3] %></h3></a> 
                 </div>
                 
             </div>
@@ -59,18 +59,18 @@
                     <a href="/question/previousQuestion/<%= question._id %>"  class=<%= (messages.previousQuestionError) != null ? 'isDisabled' : '' %>>
                         <i class="fa fa-angle-left"></i>
                         <span class="is-size-5">Prev</span>
-                        <% if (messages.previousQuestionError) { %>   
-                            <span class="notification is-warning">
-                              <%= messages.previousQuestionError.pop() %>
-                            </span>
-                        <% } %> 
                     </a>
+                    <% if (messages.previousQuestionError) { %>   
+                        <span class="notification is-warning">
+                          <%= messages.previousQuestionError.pop() %>
+                        </span>
+                    <% } %>
+                    <% if (messages.nextQuestionError) { %>   
+                        <span class="notification is-warning">
+                          <%= messages.nextQuestionError.pop() %>
+                        </span>
+                    <% } %>  
                     <a href="/question/nextQuestion/<%= question._id %>" class=<%= (messages.nextQuestionError) != null ? 'isDisabled' : '' %>>
-                        <% if (messages.nextQuestionError) { %>   
-                              <span class="notification is-warning">
-                                <%= messages.nextQuestionError.pop() %>
-                              </span>
-                        <% } %> 
                         <span class="is-size-5">Next</span>
                         <i class="fa fa-angle-right"></i>
                     </a>
