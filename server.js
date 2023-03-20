@@ -80,6 +80,7 @@ app.use((req, res, next) => {
   res.render('errors/page-not-found.ejs')
 })
 
+
 //Server Running
 app.listen(process.env.PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`);
