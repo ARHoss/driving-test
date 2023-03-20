@@ -1,9 +1,20 @@
-        <footer class="card-footer">
-            <div class="card-footer-item is-flex is-justify-content-space-evenly">
+<footer class="card-footer">
+    <div class="card-footer-item is-flex is-justify-content-space-evenly">
+        <% if (typeof currentPage !== 'undefined'){ %>
+            <% if (currentPage != 'profile') { %> 
                 <a class="button is-primary" href="/profile">Return to Profile</a>
+            <% } %>
+
+            <% if (currentPage !== 'feed') { %> 
                 <a class="button is-primary" href="/feed">Return to Feed</a>
-            </div>
-        </footer>
+            <% } %>
+        <% } else{ %>
+            <a class="button is-primary" href="/profile">Return to Profile</a>
+            <a class="button is-primary" href="/feed">Return to Feed</a>
+        <% } %>
+        
+    </div>
+</footer>
   
     
         <!-- Font Awesome -->

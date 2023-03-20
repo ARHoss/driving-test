@@ -41,6 +41,10 @@ footer {
     display: none;
 }
 
+.hide {
+  display: none;
+}
+
 .isDisabled {
   color: currentColor;
   cursor: not-allowed;

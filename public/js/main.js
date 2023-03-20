@@ -15,7 +15,8 @@ if (document.querySelector(".markComplete")) {
 
 
 // Event handler code goes here
-function showAnswer(){
+function showAnswer(e){
+    e.preventDefault();
     const answer = document.getElementsByClassName('questionAnswer');
     const answerIcon = document.querySelector('#answerIcon');
 
