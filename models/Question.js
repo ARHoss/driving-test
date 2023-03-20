@@ -31,6 +31,15 @@ const QuestionSchema = new mongoose.Schema({
         // Default value
         default: Date.now,
     },
+    // Variable Name
+    imageURL: {
+        // Type
+        type: String,
+        // Default value
+        default: null,
+        // Required variable
+        required: false,
+    },
 });
 
 // This is where the collection names are defined - mongoose autamtically makes it plural and lowercase - the third argument is hard coded name for collection if defined

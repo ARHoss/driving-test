@@ -61,3 +61,7 @@ footer {
 .box:hover {
   background-color: green;
 }
+
+.flex-width{
+  width: 60%;
+}

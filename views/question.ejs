@@ -5,25 +5,33 @@
     <div class="column">
         
         <div class="card">
-            <header class="card-header has-text-centered">
-                <h2 class="title is-2 has-text-centered"><%= question.title %></h2>
+            <header class="card-header has-text-centered is-flex is-flex-wrap-wrap is-justify-content-center is-align-content-center is-full">
+                <h2 class="title flex-width">
+                    <%= question.title %>
+                    
+                </h2>
+                <% if(question.imageURL){ %>
+                    <figure class="image flex-width is-256x256">
+                        <img src=<%= question.imageURL %> >
+                    </figure>
+                <% } %>
             </header>
             <div class="card-content is-flex is-flex-wrap-nowrap is-justify-content-center is-flex-direction-column">
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[0] %></h3></a> 
+                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[0] %></h3></a> 
                 </div>
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[1] %></h3></a> 
+                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[1] %></h3></a> 
                 </div>
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[2] %></h3></a> 
+                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[2] %></h3></a> 
                 </div>
                 
                 <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 id="questionAnswer" class="subtitle is-3 has-text-centered"><%= question.answer[3] %></h3></a> 
+                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[3] %></h3></a> 
                 </div>
                 
             </div>
@@ -78,11 +86,11 @@
             </div>
         </div>
         
-        <div class="card">
+        <div class="card <%= user.role %>">
             <div class="card-content">
                 <div class="buttons is-centered">
                     <form
-                        class="col-1 <%= user.role %>"
+                        class="col-1"
                         action="/question/deleteQuestion/<%= question._id %>?_method=DELETE"
                         method="POST"
                     >

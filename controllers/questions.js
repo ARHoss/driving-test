@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
-const openai = require("../middleware/openai")
+const openai = require("../middleware/openai");
+const cloudinary = require("../middleware/cloudinary");
 
 // OpenAI API call function
 async function callOpenAI(message) {
@@ -94,9 +95,16 @@ module.exports = {
     },
     createQuestion: async (req, res) => {
         try {
+
+            // Upload image to cloudinary
+            const imageURL = null;
+            if(req.file && req.file.path){
+                imageURL = await cloudinary.uploader.upload(req.file.path);
+            }
             
-            let message = await callOpenAI(`provide 3 wrong answer not as a list but seperated by commas only that are close to this answer: ${req.body.answer}`);
-            message = message.split(', ');
+            
+            let message = await callOpenAI(`paraphase the statement with the same beginning and provide 3 wrong answer not as a list but seperated by commas only that are close to this answer and no connecting words such as (and) : ${req.body.answer}`);
+            message = message.split(',');
 
             // Questions & answers
             console.log('Question: '+req.body.title)
@@ -110,7 +118,8 @@ module.exports = {
                     message[0],
                     message[1],
                     message[2],
-                ]
+                ],
+                imageURL: imageURL && imageURL.secure_url? imageURL.secure_url  : null,
             });
             console.log("Question has been added!");
             res.redirect('/profile');

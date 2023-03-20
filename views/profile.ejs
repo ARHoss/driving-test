@@ -14,9 +14,9 @@
         </footer>        
       </div>
 
-      <div class="mt-5">
+      <div class="mt-5 <%= user.role %>">
         <h2 class="title">Add a Question</h2>
-        <form action="/question/createQuestion" method="POST">
+        <form action="/question/createQuestion" enctype="multipart/form-data" method="POST">
           <div class="field">
             <label class="label" for="title">Title</label>
             <div class="control">
@@ -27,6 +27,12 @@
             <label class="label" for="answer">Answer</label>
             <div class="control">
               <input class="input" type="text" id="answer" name="answer">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="imgUpload">Image</label>
+            <div class="control">
+              <input type="file" class="form-control" id="imageUpload" name="file">
             </div>
           </div>
           <div class="field">
