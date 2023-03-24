@@ -69,3 +69,18 @@ footer {
 .flex-width{
   width: 60%;
 }
+
+/* CSS code for the green and red borders */
+
+.correct {
+  border: 2px solid green;
+}
+
+.wrong {
+  border: 2px solid red;
+}
+
+
+.answerHidden{
+  display: none;
+}

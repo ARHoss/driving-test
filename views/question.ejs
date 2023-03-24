@@ -18,21 +18,60 @@
             </header>
             <div class="card-content is-flex is-flex-wrap-nowrap is-justify-content-center is-flex-direction-column">
                 
-                <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[0] %></h3></a> 
-                </div>
+                <!-- HTML code for displaying the answers -->
+                <ul>
+                    <li>
+                        <div class="questionAnswer content box is-fullwidth is-hidden">
+                            <a href="#">
+                                <h3 class="subtitle is-3 has-text-centered answer"
+                                    data-answer="<%= question.answer[0] %>"
+                                >
+                                    <%= question.answer[0] %>
+                                </h3>
+                            </a> 
+                        </div>
+                    </li>
+                    <li>
+                        <div class="questionAnswer content box is-fullwidth is-hidden">
+                            <a href="#" class="answer">
+                                <h3 class="subtitle is-3 has-text-centered answer"
+                                    data-answer="<%= question.answer[1] %>"
+                                >
+                                    <%= question.answer[1] %>
+                                </h3>
+                            </a> 
+                        </div>
+                    </li>
+                    <li>
+                        <div class="questionAnswer content box is-fullwidth is-hidden">
+                            <a href="#" class="answer">
+                                <h3 class="subtitle is-3 has-text-centered answer"
+                                    data-answer="<%= question.answer[2] %>"
+                                >
+                                    <%= question.answer[2] %>
+                                </h3>
+                            </a> 
+                        </div>
+                    </li>
+                    <li>
+                        <div class="questionAnswer content box is-fullwidth is-hidden">
+                            <a href="#" class="answer">
+                                <h3 class="subtitle is-3 has-text-centered answer"
+                                    data-answer="<%= question.answer[3] %>"
+                                >
+                                    <%= question.answer[3] %>
+                                </h3>
+                            </a> 
+                        </div>
+                    </li>
+                </ul>
+                <a href="#" class="answerHidden" data-answer="<%= answer %>"></a>
                 
-                <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[1] %></h3></a> 
-                </div>
                 
-                <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[2] %></h3></a> 
-                </div>
                 
-                <div class="questionAnswer content box is-fullwidth is-hidden">
-                    <a href="#"><h3 class="subtitle is-3 has-text-centered"><%= question.answer[3] %></h3></a> 
-                </div>
+                
+                
+                
                 
             </div>
         </div> 

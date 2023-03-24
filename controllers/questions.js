@@ -42,16 +42,18 @@ async function getQuestion(userId, params){
         question = await Question.findOne().sort({ "_id" : 1 }).limit(1);
     }
     
+    const answer = question.answer[0]
     const markComplete = await question.users.indexOf(userId) > -1?'is-success':'';
     question.answer = shuffle(question.answer);
 
-    return {question, markComplete}
+    return {question, markComplete, answer}
 }
 
 async function getNextPrevQuestion(userId, questionId, nextOrPrev){
     
     let question;
     let markComplete = null;
+    let answer;
 
     if(nextOrPrev == 'next'){
         question = await Question.findOne({_id: {$gt: questionId }}).limit(1);
@@ -61,20 +63,21 @@ async function getNextPrevQuestion(userId, questionId, nextOrPrev){
     }
 
     if(question != null){
+        answer = question.answer[0]
         question.answer = shuffle(question.answer);
         markComplete = await question.users.indexOf(userId) > -1?'is-success':'';
-        return {question, markComplete} 
+        return {question, markComplete, answer} 
     }
 
-    return {question, markComplete}
+    return {question, markComplete, answer}
 }
 
 module.exports = {
     getQuestion: async (req, res) => {
         try {
             
-            const {question, markComplete} = await getQuestion(req.user.id)
-            res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
+            const {question, markComplete, answer} = await getQuestion(req.user.id)
+            res.render("question.ejs", { question: question, answer: answer, user: req.user, markComplete: markComplete });
         } catch (err) {
             console.log(err);
             res.render("errors/500.ejs")
@@ -83,8 +86,8 @@ module.exports = {
     getCurrentQuestion: async (req, res) => {
         try {
 
-            const {question, markComplete} = await getQuestion(req.user.id, req.params.id);
-            res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
+            const {question, markComplete, answer} = await getQuestion(req.user.id, req.params.id);
+            res.render("question.ejs", { question: question, answer: answer, user: req.user, markComplete: markComplete });
         } catch (err) {
             console.log(err);
             res.render("errors/500.ejs")
@@ -93,9 +96,9 @@ module.exports = {
     getNextQuestion: async (req, res) => {
         try {
 
-            const {question, markComplete} = await getNextPrevQuestion(req.user.id, req.params.id, 'next')
+            const {question, markComplete, answer} = await getNextPrevQuestion(req.user.id, req.params.id, 'next')
             if(question != null){
-                res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
+                res.render("question.ejs", { question: question, answer: answer, user: req.user, markComplete: markComplete });
             }else{
                 
                 req.flash("nextQuestionError", ['No next question']);
@@ -111,10 +114,10 @@ module.exports = {
     getPreviousQuestion: async (req, res) => {
         try {
 
-            const {question, markComplete} = await getNextPrevQuestion(req.user.id, req.params.id, 'prev')
+            const {question, markComplete, answer} = await getNextPrevQuestion(req.user.id, req.params.id, 'prev')
 
             if(question != null){
-                res.render("question.ejs", { question: question, user: req.user, markComplete: markComplete });
+                res.render("question.ejs", { question: question, answer: answer, user: req.user, markComplete: markComplete });
             }else{
                 req.flash("previousQuestionError", ['No previous question']);
                 res.redirect(`/question/${req.params.id}`);
