@@ -73,14 +73,9 @@ footer {
 /* CSS code for the green and red borders */
 
 .correct {
-  border: 2px solid green;
+  background-color: lightgreen;
 }
 
 .wrong {
-  border: 2px solid red;
-}
-
-
-.answerHidden{
-  display: none;
+  background-color: rgb(247, 219, 219);
 }
