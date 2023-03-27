@@ -1,5 +1,7 @@
 <%- include('partials/header') -%>
+
 <div class="container">
+
   <div class="columns mt-5">
     <div class="column is-full">
       <div class="box no-hover">
@@ -9,13 +11,43 @@
           <p><strong>Email:</strong> <%= user.email %></p>
         </div>
         <footer class="card-footer is-flex is-justify-content-space-between">
-          <a href="/question" class="button is-primary">Return to Questions</a>
           <a href="/logout" class="button is-primary">Logout</a>
-        </footer>        
+        </footer> 
       </div>
+    </div>
+  </div>
 
-      <div class="mt-5 <%= user.role %>">
+  <div class="modal" id="confirmation-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Confirmation</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        Hey there! Just a heads up - once you start the exam, you gotta finish it to save your progress. Are you sure you wanna head to the questions page now?
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" id="confirm-button">Yes</button>
+        <button class="button" id="cancel-button">No</button>
+      </footer>
+    </div>
+  </div>
+
+  <div class="columns mt-5">
+    <div class="column is-full">
+      <div class="box no-hover is-flex is-justify-content-center">
+        <button class="button is-primary" id="start-button">Start Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns mt-5">
+    <div class="column is-full <%= user.role %>">
+      <div class="box no-hover">
+        
         <h2 class="title">Add a Question</h2>
+        
         <form action="/question/createQuestion" enctype="multipart/form-data" method="POST">
           <div class="field">
             <label class="label" for="title">Title</label>
@@ -41,24 +73,11 @@
             </div>
           </div>
         </form>
+      
       </div>
     </div>
-
-    <!-- <div class="column is-half">
-      <div class="columns is-multiline">
-        <% for(var i=0; i<posts.length; i++) { %>
-          <div class="column is-6 mt-5">
-            <a href="/post/<%= posts[i]._id %>">
-              <figure class="image is-4by3">
-                <img src="<%= posts[i].image %>">
-              </figure>
-            </a>
-          </div>
-        <% } %>
-      </div>
-      
-    </div> -->
   </div>
+
 </div>
 
 <%- include('partials/footer') -%>

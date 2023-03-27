@@ -39,6 +39,8 @@ function markComplete(){
 
 // JavaScript code for handling answer event
 const answers = document.querySelectorAll('.answer');
+// Get the next button element
+const nextButton = document.getElementById('next');
 
 // Bind the event listener to each answer link
 answers.forEach(answer => {
@@ -75,6 +77,9 @@ function findAnswer(e) {
             }
         });
     }
+
+    // Remove the isDisabled class from the button
+    nextButton.classList.remove('isDisabled');
 
     // Unbind the event listener from all answer links after the user has made a selection
     answers.forEach(answer => {
@@ -137,3 +142,28 @@ function wrongAnswer(){
     return spanElement;
     
 }
+
+// Exam start button
+
+const startButton = document.querySelector('#start-button');
+const confirmationModal = document.querySelector('#confirmation-modal');
+const confirmButton = document.querySelector('#confirm-button');
+const cancelButton = document.querySelector('#cancel-button');
+const modal = document.querySelector('.modal');
+const closeButton = modal.querySelector('.delete');
+
+startButton.addEventListener('click', () => {
+    confirmationModal.classList.add('is-active');
+});
+
+confirmButton.addEventListener('click', () => {
+    window.location.href = '/question';
+});
+
+cancelButton.addEventListener('click', () => {
+    confirmationModal.classList.remove('is-active');
+});
+
+closeButton.addEventListener('click', function() {
+    modal.classList.remove('is-active');
+});
