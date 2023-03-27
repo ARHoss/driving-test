@@ -1,4 +1,3 @@
-
 // Check if element with id "showAnswer" exists
 if (document.querySelector("#showAnswer")) {
     // Attach event listener to element with id "showAnswer"
@@ -11,20 +10,16 @@ if (document.querySelector(".markComplete")) {
     document.querySelector('.markComplete').addEventListener('click', markComplete);
 }
 
-
-
-
-
-
-
-// Event handler code goes here
+// Event handler function for showing/hiding answer
 function showAnswer(e){
     e.preventDefault();
     const answer = document.querySelector('#questionAnswer');
     const answerIcon = document.querySelector('#answerIcon');
 
+    // Toggle the visibility of the answer
     answer.classList.toggle('is-hidden')
 
+    // Toggle the text and icon of the show/hide answer button
     if(answerIcon.classList.contains('fa-eye')){
         answerIcon.innerText = 'Show Answer';
         answerIcon.classList.remove('fa-eye');
@@ -33,20 +28,16 @@ function showAnswer(e){
         answerIcon.innerText = 'Hide';
         answerIcon.classList.remove('fa-eye-slash');
         answerIcon.classList.add('fa-eye'); 
-    }
-    
+    }    
 }
 
+// Event handler function for marking a question as complete
 function markComplete(){
     const markComplete =  document.querySelector('.markComplete');
     markComplete.classList.toggle('is-success')
 }
 
-
 // JavaScript code for handling answer event
-
-
-
 const answers = document.querySelectorAll('.answer');
 
 // Bind the event listener to each answer link
@@ -54,7 +45,7 @@ answers.forEach(answer => {
   answer.addEventListener('click', findAnswer)
 })
 
-
+// Event handler function for finding the correct answer
 function findAnswer(e) {
     e.preventDefault();
 
@@ -91,17 +82,24 @@ function findAnswer(e) {
     });
 }
 
+// Function for creating a span element for correct answers
 function rightAnswer(){
 
+    // Get the current number of correct answers from local storage
     let score = localStorage.getItem('rightAnswer');
 
-    // Creating right answer span
+    // Create a new span element with the appropriate CSS classes
     const spanElement = document.createElement('span');
     spanElement.setAttribute('class', 'icon has-text-success fa-lg mr-3');
+
+    // Create a new i element with the appropriate CSS classes
     const iElement = document.createElement('i');
     iElement.setAttribute('class', 'fas fa-check-circle fa-2x');
+
+    // Add the i element to the span element
     spanElement.appendChild(iElement);
 
+    // Increment the correct answer score in local storage
     if(score == null){
         localStorage.setItem('rightAnswer', 1)     
     }else{
@@ -109,20 +107,25 @@ function rightAnswer(){
         localStorage.setItem('rightAnswer', score)
     }
 
-    return spanElement;
-    
+    // Return the newly created span element
+    return spanElement;   
 }
 
+
+// Function for creating a span element for wrong answers
 function wrongAnswer(){
 
+    // Retrieve the current score from localStorage
     let score = localStorage.getItem('wrongAnswer');
 
+    // Create the icon element for the wrong answer
     const spanElement = document.createElement('span');
     spanElement.setAttribute('class', 'icon has-text-danger fa-lg mr-3');
     const iElement = document.createElement('i');
     iElement.setAttribute('class', 'fas fa-times-circle fa-2x');
     spanElement.appendChild(iElement);
 
+    // Update the score in localStorage
     if(score == null){
         localStorage.setItem('wrongAnswer', 1)     
     }else{
@@ -130,6 +133,7 @@ function wrongAnswer(){
         localStorage.setItem('wrongAnswer', score)
     }
 
+    // Return the wrong answer icon
     return spanElement;
     
 }

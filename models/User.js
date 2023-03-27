@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
   role: {type: String, default: 'user'},
+  scores: [{
+    score: { type: Number, default: 0 },
+    dateCompleted: { type: Date, default: Date.now }
+  }],
 });
 
 // Password hash middleware.
