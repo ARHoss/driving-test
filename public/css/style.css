@@ -63,7 +63,7 @@ footer {
 }
 
 .box:hover {
-  background-color: green;
+  background-color: lightgray;
 }
 
 .no-hover:hover {
@@ -77,10 +77,10 @@ footer {
 /* CSS code for the green and red borders */
 
 .correct {
-  background-color: lightgreen;
+  
 }
 
 .wrong {
-  background-color: rgb(247, 219, 219);
+  
 }
 

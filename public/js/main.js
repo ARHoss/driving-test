@@ -84,7 +84,13 @@ function findAnswer(e) {
     // Unbind the event listener from all answer links after the user has made a selection
     answers.forEach(answer => {
         answer.removeEventListener('click', findAnswer);
+        answer.addEventListener('click', preventDefault);
     });
+}
+
+// Prevent Default Behaviour
+function preventDefault(e){
+    e.preventDefault();
 }
 
 // Function for creating a span element for correct answers
@@ -145,25 +151,38 @@ function wrongAnswer(){
 
 // Exam start button
 
-const startButton = document.querySelector('#start-button');
-const confirmationModal = document.querySelector('#confirmation-modal');
-const confirmButton = document.querySelector('#confirm-button');
-const cancelButton = document.querySelector('#cancel-button');
-const modal = document.querySelector('.modal');
-const closeButton = modal.querySelector('.delete');
+// Check if element with id "#start-button" exists
+if (document.querySelector('#start-button')) {
+    // Run the function
+    startButton();
+}
 
-startButton.addEventListener('click', () => {
-    confirmationModal.classList.add('is-active');
-});
 
-confirmButton.addEventListener('click', () => {
-    window.location.href = '/question';
-});
 
-cancelButton.addEventListener('click', () => {
-    confirmationModal.classList.remove('is-active');
-});
+function startButton(){
 
-closeButton.addEventListener('click', function() {
-    modal.classList.remove('is-active');
-});
+    const startButton = document.querySelector('#start-button');
+    const confirmationModal = document.querySelector('#confirmation-modal');
+    const confirmButton = document.querySelector('#confirm-button');
+    const cancelButton = document.querySelector('#cancel-button');
+    const modal = document.querySelector('.modal');
+    const closeButton = modal.querySelector('.delete');
+
+    startButton.addEventListener('click', () => {
+        confirmationModal.classList.add('is-active');
+    });
+
+    confirmButton.addEventListener('click', () => {
+        window.location.href = '/question';
+    });
+
+    cancelButton.addEventListener('click', () => {
+        confirmationModal.classList.remove('is-active');
+    });
+
+    closeButton.addEventListener('click', function() {
+        modal.classList.remove('is-active');
+    });
+
+}
+
