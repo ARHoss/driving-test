@@ -158,7 +158,6 @@ if (document.querySelector('#start-button')) {
 }
 
 
-
 function startButton(){
 
     const startButton = document.querySelector('#start-button');
