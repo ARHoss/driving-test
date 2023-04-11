@@ -62,7 +62,7 @@ function findAnswer(e) {
     // Check if the user's selected answer is correct
     if (answerValue === answerSample) {
         this.classList.add('correct');
-        answerDiv.insertBefore(rightAnswer(), answerDiv.firstChild);
+        answerDiv.insertBefore(rightAnswer(true), answerDiv.firstChild);
         
     } else {
         this.classList.add('wrong');
@@ -73,7 +73,7 @@ function findAnswer(e) {
             if (answer.getAttribute('data-answer') === answerValue) {
                 answer.classList.add('correct');
                 const answerDiv = answer.parentElement;
-                answerDiv.insertBefore(rightAnswer(), answerDiv.firstChild);
+                answerDiv.insertBefore(rightAnswer(false), answerDiv.firstChild);
             }
         });
     }
@@ -94,7 +94,7 @@ function preventDefault(e){
 }
 
 // Function for creating a span element for correct answers
-function rightAnswer(){
+function rightAnswer(bool){
 
     // Get the current number of correct answers from local storage
     let score = localStorage.getItem('rightAnswer');
@@ -111,12 +111,12 @@ function rightAnswer(){
     spanElement.appendChild(iElement);
 
     // Increment the correct answer score in local storage
-    if(score == null){
-        localStorage.setItem('rightAnswer', 1)     
-    }else{
+    if(bool){
         score++
         localStorage.setItem('rightAnswer', score)
     }
+    
+    
 
     // Return the newly created span element
     return spanElement;   
@@ -137,12 +137,8 @@ function wrongAnswer(){
     spanElement.appendChild(iElement);
 
     // Update the score in localStorage
-    if(score == null){
-        localStorage.setItem('wrongAnswer', 1)     
-    }else{
-        score++
-        localStorage.setItem('wrongAnswer', score)
-    }
+    score++
+    localStorage.setItem('wrongAnswer', score)
 
     // Return the wrong answer icon
     return spanElement;
@@ -172,6 +168,8 @@ function startButton(){
     });
 
     confirmButton.addEventListener('click', () => {
+        localStorage.setItem('rightAnswer', 0);
+        localStorage.setItem('wrongAnswer', 0) 
         window.location.href = '/question';
     });
 
@@ -184,4 +182,31 @@ function startButton(){
     });
 
 }
+
+
+const profileButton = document.querySelector('.profileButton');
+const scoreLossModal = document.querySelector('#score-loss-modal');
+const confirmButton = document.querySelector('#confirm-button');
+const cancelButton = document.querySelector('#cancel-button');
+const modal = document.querySelector('.modal');
+const closeButton = modal.querySelector('.delete');
+
+profileButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  scoreLossModal.classList.add('is-active');
+});
+
+confirmButton.addEventListener('click', () => {
+  localStorage.clear();
+  window.location.href = '/profile';
+});
+
+cancelButton.addEventListener('click', () => {
+  scoreLossModal.classList.remove('is-active');
+});
+
+closeButton.addEventListener('click', () => {
+  scoreLossModal.classList.remove('is-active');
+});
+
 
