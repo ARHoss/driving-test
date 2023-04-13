@@ -42,6 +42,11 @@ const answers = document.querySelectorAll('.answer');
 // Get the next button element
 const nextButton = document.getElementById('next');
 
+// Next Button
+if(nextButton){
+    nextButton.addEventListener('click', preventDefault);
+}
+
 // Bind the event listener to each answer link
 answers.forEach(answer => {
   answer.addEventListener('click', findAnswer)
@@ -80,6 +85,7 @@ function findAnswer(e) {
 
     // Remove the isDisabled class from the button
     nextButton.classList.remove('isDisabled');
+    nextButton.removeEventListener('click', preventDefault)
 
     // Unbind the event listener from all answer links after the user has made a selection
     answers.forEach(answer => {
@@ -92,6 +98,8 @@ function findAnswer(e) {
 function preventDefault(e){
     e.preventDefault();
 }
+
+// Next Button
 
 // Function for creating a span element for correct answers
 function rightAnswer(bool){
@@ -184,29 +192,47 @@ function startButton(){
 }
 
 
-const profileButton = document.querySelector('.profileButton');
-const scoreLossModal = document.querySelector('#score-loss-modal');
-const confirmButton = document.querySelector('#confirm-button');
-const cancelButton = document.querySelector('#cancel-button');
-const modal = document.querySelector('.modal');
-const closeButton = modal.querySelector('.delete');
+// Return to profile button
 
-profileButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  scoreLossModal.classList.add('is-active');
-});
+// Check if element with id "#profileButton" exists
 
-confirmButton.addEventListener('click', () => {
-  localStorage.clear();
-  window.location.href = '/profile';
-});
 
-cancelButton.addEventListener('click', () => {
-  scoreLossModal.classList.remove('is-active');
-});
 
-closeButton.addEventListener('click', () => {
-  scoreLossModal.classList.remove('is-active');
-});
+if(document.querySelector('.profileButton')){
+    // Run the function
+    profileButton();
+}
+
+function profileButton(){
+
+    const profileButton = document.querySelector('.profileButton');
+    const scoreLossModal = document.querySelector('#score-loss-modal');
+    const confirmButton = document.querySelector('#confirm-button');
+    const cancelButton = document.querySelector('#cancel-button');
+    const modal = document.querySelector('.modal');
+    const closeButton = modal.querySelector('.delete');
+
+    profileButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        scoreLossModal.classList.add('is-active');
+      });
+      
+      confirmButton.addEventListener('click', () => {
+        localStorage.clear();
+        window.location.href = '/profile';
+      });
+      
+      cancelButton.addEventListener('click', () => {
+        scoreLossModal.classList.remove('is-active');
+      });
+      
+      closeButton.addEventListener('click', () => {
+        scoreLossModal.classList.remove('is-active');
+      });
+}
+
+
+
+
 
 

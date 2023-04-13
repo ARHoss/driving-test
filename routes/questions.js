@@ -13,8 +13,6 @@ router.get("/nextQuestion/:id", ensureAuth, questionsController.getNextQuestion)
 
 router.get("/previousQuestion/:id", ensureAuth, questionsController.getPreviousQuestion);
 
-router.get("/finalscore", ensureAuth, questionsController.getFinalScore);
-
 router.post("/createQuestion", ensureAdmin, upload.single("file"), questionsController.createQuestion);
 
 router.put("/completedQuestion/:id", ensureAuth, questionsController.completedQuestion);
