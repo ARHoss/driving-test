@@ -101,14 +101,22 @@ module.exports = {
                 res.render("question.ejs", { question: question, answer: answer, user: req.user, markComplete: markComplete });
             }else{
                 
-                req.flash("nextQuestionError", ['No next question']);
-                res.redirect(`/question/${req.params.id}`);
+                // req.flash("nextQuestionError", ['No next question']);
+                res.redirect(`/question/finalscore`);
 
             }
           
         } catch (err) {
           console.log(err);
           res.render("errors/404.ejs")
+        }
+    },
+    getFinalScore: async (req, res) => {
+        try {
+            res.render("finalscore.ejs");
+        } catch (err) {
+            console.log('finalscore');
+            res.render("errors/500.ejs")
         }
     },
     getPreviousQuestion: async (req, res) => {

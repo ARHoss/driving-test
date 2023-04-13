@@ -231,7 +231,29 @@ function profileButton(){
       });
 }
 
+// Final Score
 
+// check if on the final score page and execute the function
+if (window.location.pathname === '/question/finalscore') {
+    displayFinalScore();
+}
+
+function displayFinalScore() {
+    // retrieve data from local storage
+    const rightAnswer = parseInt(localStorage.getItem('rightAnswer'));
+    const wrongAnswer = parseInt(localStorage.getItem('wrongAnswer'));
+    const totalQuestions = rightAnswer + wrongAnswer;
+    const percentage = Math.round((rightAnswer / totalQuestions) * 100);
+  
+    // populate HTML elements
+    const totalRightAnswerElem = document.querySelector('.totalRightAnswer');
+    const totalQuestionsElem = document.querySelector('.totalQuestions');
+    const resultInPercentageElem = document.querySelector('.resultInPercentage');
+  
+    totalRightAnswerElem.textContent = rightAnswer;
+    totalQuestionsElem.textContent = totalQuestions;
+    resultInPercentageElem.textContent = percentage + '%';
+}
 
 
 
