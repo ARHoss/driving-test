@@ -214,21 +214,32 @@ function profileButton(){
 
     profileButton.addEventListener('click', (event) => {
         event.preventDefault();
-        scoreLossModal.classList.add('is-active');
-      });
-      
-      confirmButton.addEventListener('click', () => {
-        localStorage.clear();
-        window.location.href = '/profile';
-      });
-      
-      cancelButton.addEventListener('click', () => {
-        scoreLossModal.classList.remove('is-active');
-      });
-      
-      closeButton.addEventListener('click', () => {
-        scoreLossModal.classList.remove('is-active');
-      });
+        if (window.location.pathname === '/question/finalscore') {
+            // retrieve data from local storage
+            const rightAnswer = parseInt(localStorage.getItem('rightAnswer'));
+            const wrongAnswer = parseInt(localStorage.getItem('wrongAnswer'));
+            const totalQuestions = rightAnswer + wrongAnswer;
+            const percentage = Math.round((rightAnswer / totalQuestions) * 100);
+            localStorage.clear();
+            window.location.href = `/setScore/${percentage}`;
+        }else{
+            scoreLossModal.classList.add('is-active');
+        }
+        
+    });
+    
+    confirmButton.addEventListener('click', () => {
+    localStorage.clear();
+    window.location.href = '/profile';
+    });
+    
+    cancelButton.addEventListener('click', () => {
+    scoreLossModal.classList.remove('is-active');
+    });
+    
+    closeButton.addEventListener('click', () => {
+    scoreLossModal.classList.remove('is-active');
+    });
 }
 
 // Final Score

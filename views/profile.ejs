@@ -34,6 +34,42 @@
     </div>
   </div>
 
+  <!-- <% if (results && results.length > 0) { %>
+    <div class="columns mt-5">
+      <div class="column is-full">
+        <div class="box no-hover is-flex is-justify-content-center">
+          <h1 class="title">Last <%= results.length %> <%= results.length === 1 ? 'Score' : 'Scores' %></h1>
+          <div class="content">
+            <ul>
+              <% results.slice(-5).forEach((score, index) => { %>
+                <li>Exam <%= results.length - index %>: <%= score %></li>
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } %> -->
+  <% if (results && results.length > 0) { %>
+    <div class="columns mt-5">
+      <div class="column is-full">
+        <div class="box no-hover">
+          <h1 class="title">Last 5 Scores</h1>
+          <div class="content">
+            <ul>
+              <% results.slice(-5).forEach((result, index) => { %>
+                <li>Exam <%= index+1 %>: <%= result.score %></li>
+              <% }); %>
+            </ul>
+          </div>
+          <footer class="card-footer is-flex is-justify-content-space-between">
+            <!-- <a href="/logout" class="button is-primary">Logout</a> -->
+          </footer> 
+        </div>
+      </div>
+    </div>
+  <% } %>
+
   <div class="columns mt-5">
     <div class="column is-full">
       <div class="box no-hover is-flex is-justify-content-center">
