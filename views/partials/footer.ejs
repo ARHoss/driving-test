@@ -1,20 +1,39 @@
 <footer class="card-footer">
     <div class="card-footer-item is-flex is-justify-content-space-evenly">
         <% if (typeof currentPage !== 'undefined'){ %>
-            <% if (currentPage != 'profile') { %> 
-                <a class="button is-primary" href="/profile">Return to Profile</a>
-            <% } %>
-
-            <% if (currentPage !== 'feed') { %> 
-                <a class="button is-primary" href="/feed">Return to Feed</a>
+            
+            <% if (currentPage != 'index'){%>
+              <% if (currentPage != 'profile') { %> 
+                  <a class="button is-primary profileButton" href="/profile">Return to Profile</a>
+              <% } %>
             <% } %>
         <% } else{ %>
-            <a class="button is-primary" href="/profile">Return to Profile</a>
-            <a class="button is-primary" href="/feed">Return to Feed</a>
+            <a class="button is-primary profileButton" href="/profile">Return to Profile</a>
+            <!-- <a class="button is-primary" href="/feed">Return to Feed</a> -->
         <% } %>
         
     </div>
+    
+    <!-- Modal -->
+    <div class="modal" id="score-loss-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Warning</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            Are you sure you want to leave? Your current score will be lost.
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success" id="confirm-button">Yes</button>
+            <button class="button" id="cancel-button">Cancel</button>
+          </footer>
+        </div>
+    </div>
 </footer>
+
+
   
     
         <!-- Font Awesome -->

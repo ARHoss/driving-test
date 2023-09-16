@@ -20,9 +20,8 @@ const connectDB = require("./config/database");
 
 // Linking to routes
 const mainRoutes = require("./routes/main");
-const postRoutes = require("./routes/posts");
-const commentRoutes = require("./routes/comments");
 const questionRoutes = require("./routes/questions");
+
 
 // Environment variables
 require("dotenv").config({ path: "./config/.env" });
@@ -73,8 +72,6 @@ app.use(flash());
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
-app.use("/post", postRoutes);
-app.use("/comment", commentRoutes);
 app.use("/question", questionRoutes);
 app.use((req, res, next) => {
   res.render('errors/page-not-found.ejs')

@@ -1,11 +1,12 @@
 <%- include('partials/header') -%>
 
 
-<div class="columns">
-    <div class="column">
-        
-        <div class="card">
-            <header class="card-header has-text-centered is-flex is-flex-wrap-wrap is-justify-content-center is-align-content-center is-full">
+<div class="container has-text-centered">
+
+
+    <div class="columns mt-5">
+        <div class="column is-full">
+            <div class="box no-hover is-flex is-justify-content-center">
                 <h2 class="title flex-width">
                     <%= question.title %>
                     
@@ -15,11 +16,18 @@
                         <img src=<%= question.imageURL %> >
                     </figure>
                 <% } %>
-            </header>
-            <div class="card-content is-flex is-flex-wrap-nowrap is-justify-content-center is-flex-direction-column">
-                
+            </div>
+        </div>
+    </div> 
+
+    <div id="questionAnswer" class="columns mt-5 is-hidden">
+        <div class="column is-full">
+            <div class="box no-hover is-flex is-justify-content-center">
+
+
+                    
                 <!-- HTML code for displaying the answers -->
-                <ul id="questionAnswer" class="is-hidden has-text-centered">
+                <ul>
                     <li>
                         <div class="content box is-fullwidth">
                             <a href="#" 
@@ -30,15 +38,15 @@
                             </a> 
                         </div>
                     </li>
-                      
-                      
+                    
+                    
                     <li>
                         <div class="content box is-fullwidth">
                             <a href="#" 
                                 class="subtitle is-3 answer"
                                 data-answer="<%= question.answer[1] %>"    
                             >
-                             <%= question.answer[1] %>   
+                            <%= question.answer[1] %>   
                             </a> 
                         </div>
                     </li>
@@ -48,7 +56,7 @@
                                 class="subtitle is-3 answer"
                                 data-answer="<%= question.answer[2] %>"    
                             >
-                             <%= question.answer[2] %>   
+                            <%= question.answer[2] %>   
                             </a> 
                         </div>
                     </li>
@@ -58,88 +66,58 @@
                                 class="subtitle is-3 answer"
                                 data-answer="<%= question.answer[3] %>"    
                             >
-                             <%= question.answer[3] %>   
+                            <%= question.answer[3] %>   
                             </a> 
                         </div>
                     </li>
                 </ul>
                 <a href="#" id="realAnswer" class="is-hidden" data-answer="<%= answer %>"></a>
-                
-                
-                
-                
-                
-                
-                
-            </div>
-        </div> 
 
-        <div class="card">
-            <div class="card-content">
-                <div class="buttons is-centered">
-                    <a href="#" id="showAnswer" class="button is-info">
-                        <i id="answerIcon" class="fa fa-eye-slash">Show Answer</i>
-                    </a>
-                </div>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-content">
-                <div class="buttons is-centered">
-                    <form
-                        class="col-1"
-                        action="/question/completedQuestion/<%= question._id %>?_method=PUT"
-                        method="POST"
-                    >
-                        <button class="button markComplete fa fa-check <%= markComplete %>" type="submit"><%= markComplete?'Marked Complete' : 'Mark Complete' %></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-content">
-                <div class="buttons is-centered is-flex is-justify-content-space-between">
-                    <a href="/question/previousQuestion/<%= question._id %>"  class=<%= (messages.previousQuestionError) != null ? 'isDisabled' : '' %>>
-                        <i class="fa fa-angle-left"></i>
-                        <span class="is-size-5">Prev</span>
-                    </a>
-                    <% if (messages.previousQuestionError) { %>   
-                        <span class="notification is-warning">
-                          <%= messages.previousQuestionError.pop() %>
-                        </span>
-                    <% } %>
-                    <% if (messages.nextQuestionError) { %>   
-                        <span class="notification is-warning">
-                          <%= messages.nextQuestionError.pop() %>
-                        </span>
-                    <% } %>  
-                    <a href="/question/nextQuestion/<%= question._id %>" class=<%= (messages.nextQuestionError) != null ? 'isDisabled' : '' %>>
-                        <span class="is-size-5">Next</span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card <%= user.role %>">
-            <div class="card-content">
-                <div class="buttons is-centered">
-                    <form
-                        class="col-1"
-                        action="/question/deleteQuestion/<%= question._id %>?_method=DELETE"
-                        method="POST"
-                    >
-                        <button class="button is-danger showTrashIcon fa fa-trash" type="submit"></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    
     </div>
+    
+    <div class="columns mt-5">
+        <div class="column is-full">
+            <div class="box no-hover is-flex is-justify-content-center">
+
+                        
+                <a href="#" id="showAnswer" class="button is-info">
+                    <i id="answerIcon" class="fa fa-eye-slash">Show Answer</i>
+                </a>
+                        
+                 
+            </div>
+        </div>
+    </div>
+
+    <div id="next" class="columns mt-5 isDisabled">
+        <div class="column is-full">
+            <div class="box no-hover is-flex is-justify-content-center">
+                <a href="/question/nextQuestion/<%= question._id %>" class= "button is-success">
+                    <span class="is-size-5">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+        
+        
+    <div class="columns mt-5">
+        <div class="column is-full <%= user.role %>">
+            <div class="box no-hover is-flex is-justify-content-center">   
+                <form
+                    class="col-1"
+                    action="/question/deleteQuestion/<%= question._id %>?_method=DELETE"
+                    method="POST"
+                >
+                    <button class="button is-danger showTrashIcon fa fa-trash" type="submit"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 </div>
-</div>
+
 
 
 

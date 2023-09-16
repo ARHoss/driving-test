@@ -39,6 +39,13 @@ function markComplete(){
 
 // JavaScript code for handling answer event
 const answers = document.querySelectorAll('.answer');
+// Get the next button element
+const nextButton = document.getElementById('next');
+
+// Next Button
+if(nextButton){
+    nextButton.addEventListener('click', preventDefault);
+}
 
 // Bind the event listener to each answer link
 answers.forEach(answer => {
@@ -60,7 +67,7 @@ function findAnswer(e) {
     // Check if the user's selected answer is correct
     if (answerValue === answerSample) {
         this.classList.add('correct');
-        answerDiv.insertBefore(rightAnswer(), answerDiv.firstChild);
+        answerDiv.insertBefore(rightAnswer(true), answerDiv.firstChild);
         
     } else {
         this.classList.add('wrong');
@@ -71,19 +78,31 @@ function findAnswer(e) {
             if (answer.getAttribute('data-answer') === answerValue) {
                 answer.classList.add('correct');
                 const answerDiv = answer.parentElement;
-                answerDiv.insertBefore(rightAnswer(), answerDiv.firstChild);
+                answerDiv.insertBefore(rightAnswer(false), answerDiv.firstChild);
             }
         });
     }
 
+    // Remove the isDisabled class from the button
+    nextButton.classList.remove('isDisabled');
+    nextButton.removeEventListener('click', preventDefault)
+
     // Unbind the event listener from all answer links after the user has made a selection
     answers.forEach(answer => {
         answer.removeEventListener('click', findAnswer);
+        answer.addEventListener('click', preventDefault);
     });
 }
 
+// Prevent Default Behaviour
+function preventDefault(e){
+    e.preventDefault();
+}
+
+// Next Button
+
 // Function for creating a span element for correct answers
-function rightAnswer(){
+function rightAnswer(bool){
 
     // Get the current number of correct answers from local storage
     let score = localStorage.getItem('rightAnswer');
@@ -100,12 +119,12 @@ function rightAnswer(){
     spanElement.appendChild(iElement);
 
     // Increment the correct answer score in local storage
-    if(score == null){
-        localStorage.setItem('rightAnswer', 1)     
-    }else{
+    if(bool){
         score++
         localStorage.setItem('rightAnswer', score)
     }
+    
+    
 
     // Return the newly created span element
     return spanElement;   
@@ -126,14 +145,127 @@ function wrongAnswer(){
     spanElement.appendChild(iElement);
 
     // Update the score in localStorage
-    if(score == null){
-        localStorage.setItem('wrongAnswer', 1)     
-    }else{
-        score++
-        localStorage.setItem('wrongAnswer', score)
-    }
+    score++
+    localStorage.setItem('wrongAnswer', score)
 
     // Return the wrong answer icon
     return spanElement;
     
 }
+
+// Exam start button
+
+// Check if element with id "#start-button" exists
+if (document.querySelector('#start-button')) {
+    // Run the function
+    startButton();
+}
+
+
+function startButton(){
+
+    const startButton = document.querySelector('#start-button');
+    const confirmationModal = document.querySelector('#confirmation-modal');
+    const confirmButton = document.querySelector('#confirm-button');
+    const cancelButton = document.querySelector('#cancel-button');
+    const modal = document.querySelector('.modal');
+    const closeButton = modal.querySelector('.delete');
+
+    startButton.addEventListener('click', () => {
+        confirmationModal.classList.add('is-active');
+    });
+
+    confirmButton.addEventListener('click', () => {
+        localStorage.setItem('rightAnswer', 0);
+        localStorage.setItem('wrongAnswer', 0) 
+        window.location.href = '/question';
+    });
+
+    cancelButton.addEventListener('click', () => {
+        confirmationModal.classList.remove('is-active');
+    });
+
+    closeButton.addEventListener('click', function() {
+        modal.classList.remove('is-active');
+    });
+
+}
+
+
+// Return to profile button
+
+// Check if element with id "#profileButton" exists
+
+
+
+if(document.querySelector('.profileButton')){
+    // Run the function
+    profileButton();
+}
+
+function profileButton(){
+
+    const profileButton = document.querySelector('.profileButton');
+    const scoreLossModal = document.querySelector('#score-loss-modal');
+    const confirmButton = document.querySelector('#confirm-button');
+    const cancelButton = document.querySelector('#cancel-button');
+    const modal = document.querySelector('.modal');
+    const closeButton = modal.querySelector('.delete');
+
+    profileButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (window.location.pathname === '/question/finalscore') {
+            // retrieve data from local storage
+            const rightAnswer = parseInt(localStorage.getItem('rightAnswer'));
+            const wrongAnswer = parseInt(localStorage.getItem('wrongAnswer'));
+            const totalQuestions = rightAnswer + wrongAnswer;
+            const percentage = Math.round((rightAnswer / totalQuestions) * 100);
+            localStorage.clear();
+            window.location.href = `/setScore/${percentage}`;
+        }else{
+            scoreLossModal.classList.add('is-active');
+        }
+        
+    });
+    
+    confirmButton.addEventListener('click', () => {
+    localStorage.clear();
+    window.location.href = '/profile';
+    });
+    
+    cancelButton.addEventListener('click', () => {
+    scoreLossModal.classList.remove('is-active');
+    });
+    
+    closeButton.addEventListener('click', () => {
+    scoreLossModal.classList.remove('is-active');
+    });
+}
+
+// Final Score
+
+// check if on the final score page and execute the function
+if (window.location.pathname === '/question/finalscore') {
+    displayFinalScore();
+}
+
+function displayFinalScore() {
+    // retrieve data from local storage
+    const rightAnswer = parseInt(localStorage.getItem('rightAnswer'));
+    const wrongAnswer = parseInt(localStorage.getItem('wrongAnswer'));
+    const totalQuestions = rightAnswer + wrongAnswer;
+    const percentage = Math.round((rightAnswer / totalQuestions) * 100);
+  
+    // populate HTML elements
+    const totalRightAnswerElem = document.querySelector('.totalRightAnswer');
+    const totalQuestionsElem = document.querySelector('.totalQuestions');
+    const resultInPercentageElem = document.querySelector('.resultInPercentage');
+  
+    totalRightAnswerElem.textContent = rightAnswer;
+    totalQuestionsElem.textContent = totalQuestions;
+    resultInPercentageElem.textContent = percentage + '%';
+}
+
+
+
+
