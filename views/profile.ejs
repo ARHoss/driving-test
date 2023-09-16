@@ -42,7 +42,11 @@
           <div class="content">
             <ul>
               <% results.slice(-5).forEach((result, index) => { %>
-                <li>Exam <%= index+1 %>: <%= result.score %></li>
+                <li>Exam <%= index+1 %>: <%= result.score %>% 
+                  <span class="<%= result.score > 80? 'passed' : 'failed' %>">
+                  <%= result.score > 80 ? 'Passed' : 'Failed' %>
+                  </span>
+                </li>
               <% }); %>
             </ul>
           </div>
