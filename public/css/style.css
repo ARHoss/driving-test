@@ -88,3 +88,16 @@ li{
   list-style: none;
 }
 
+.passed {
+  background-color: green;
+  color: black;
+  font-weight: bold;
+}
+
+.failed {
+  background-color: red;
+  color: black;
+  font-weight: bold;
+}
+
+
