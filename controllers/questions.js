@@ -140,27 +140,35 @@ module.exports = {
         try {
 
             // Upload image to cloudinary
-            const imageURL = null;
+            let imageURL = null;
             if(req.file && req.file.path){
                 imageURL = await cloudinary.uploader.upload(req.file.path);
             }
+
             
             
-            let message = await callOpenAI(`paraphase the statement with the same beginning and provide 3 wrong answer not as a list but seperated by commas only that are close to this answer and no connecting words such as (and) : ${req.body.answer}`);
-            message = message.split(',');
+            // // Open AI is not free
+            // let message = await callOpenAI(`paraphase the statement with the same beginning and provide 3 wrong answer not as a list but seperated by commas only that are close to this answer and no connecting words such as (and) : ${req.body.answer}`);
+            // message = message.split(',');
 
             // Questions & answers
             console.log('Question: '+req.body.title)
             console.log('Answer: '+req.body.answer)
-            console.log('Sample Answers '+message)
+            // console.log('Sample Answers '+message)
+            console.log('Answer: '+req.body.answer1)
+            console.log('Answer: '+req.body.answer2)
+            console.log('Answer: '+req.body.answer3)
 
             await Question.create({
                 title: req.body.title,
                 answer: [
                     req.body.answer,
-                    message[0],
-                    message[1],
-                    message[2],
+                    // message[0],
+                    // message[1],
+                    // message[2],
+                    req.body.answer1,
+                    req.body.answer2,
+                    req.body.answer3,
                 ],
                 imageURL: imageURL && imageURL.secure_url? imageURL.secure_url  : null,
             });
