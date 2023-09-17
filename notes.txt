@@ -7,4 +7,6 @@ package.json comment: //"start": "cross-env NODE_ENV=production node server"
 
     Improvements
 1. get all the questions and then shuffle them
-2. Better input for login and signup
+2. submit new questins by actual examiner
+3. bug report with picture
+4. Better input for login and signup
