@@ -1,1 +1,2 @@
 Develop scoring and final markings
+package.json comment: //"start": "cross-env NODE_ENV=production node server"
