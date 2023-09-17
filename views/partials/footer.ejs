@@ -2,7 +2,7 @@
     <div class="card-footer-item is-flex is-justify-content-space-evenly">
         <% if (typeof currentPage !== 'undefined'){ %>
             
-            <% if (currentPage != 'index'){%>
+            <% if (currentPage != 'index' && currentPage != 'login' && currentPage != 'signup'){%>
               <% if (currentPage != 'profile') { %> 
                   <a class="button is-primary profileButton" href="/profile">Return to Profile</a>
               <% } %>
