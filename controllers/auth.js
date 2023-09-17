@@ -8,6 +8,7 @@ exports.getLogin = (req, res) => {
   }
   res.render("login", {
     title: "Login",
+    currentPage:'login'
   });
 };
 
@@ -62,6 +63,7 @@ exports.getSignup = (req, res) => {
   }
   res.render("signup", {
     title: "Create Account",
+    currentPage:'signup'
   });
 };
 
