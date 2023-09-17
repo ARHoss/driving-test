@@ -1,2 +1,10 @@
 Develop scoring and final markings
 package.json comment: //"start": "cross-env NODE_ENV=production node server"
+
+
+    Issues
+1. Online system cant upload questions
+
+    Improvements
+1. get all the questions and then shuffle them
+2. Better input for login and signup
