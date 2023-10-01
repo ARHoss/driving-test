@@ -34,28 +34,29 @@
     </div>
   </div>
 
+  <h2 class="title is-4">Recent Test Scores</h2>
+  
   <% if (results && results.length > 0) { %>
-    <div class="columns mt-5">
-      <div class="column is-full">
-        <div class="box no-hover">
-          <h1 class="title">Last 5 Scores</h1>
-          <div class="content">
-            <ul>
-              <% results.slice(-5).forEach((result, index) => { %>
-                <li>Exam <%= index+1 %>: <%= result.score %>% 
-                  <span class="<%= result.score > 80? 'passed' : 'failed' %>">
-                  <%= result.score > 80 ? 'Passed' : 'Failed' %>
-                  </span>
-                </li>
-              <% }); %>
-            </ul>
-          </div>
-          <footer class="card-footer is-flex is-justify-content-space-between">
-            <!-- <a href="/logout" class="button is-primary">Logout</a> -->
-          </footer> 
-        </div>
-      </div>
-    </div>
+    <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th class="has-text-centered">Date</th>
+                <th class="has-text-centered">Score (%)</th>
+                <th class="has-text-centered">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% results.slice(-5).forEach(score => { %>
+            <tr>
+                <td class="has-text-centered"><%= new Date(score.dateCompleted).toLocaleDateString() %></td>
+                <td class="has-text-centered"><%= score.score %>%</td>
+                <td class="has-text-centered"> <%= score.score < 80 ? "Did not pass" : "Passed" %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+  <% } else { %>
+    <p>No recent scores available.</p>
   <% } %>
 
   <div class="columns mt-5">
